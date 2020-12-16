@@ -6,37 +6,18 @@ public class PlayerController : MonoBehaviour
 {
     private Animator anim;
     public int combo = 1;
-    private bool canAttack = true, walkingY = false, walkingX = false;
-    // Start is called before the first frame update
+    private bool canAttack = true /*, walkingY = false, walkingX = false*/; 
+    
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();   
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetAxis("Vertical") != 0)
-        {
-            walkingY = true;
-            anim.SetFloat("frontBlend", Input.GetAxis("Vertical"));
-        }
-        else
-        {
-            walkingY = false;
-            anim.SetFloat("frontBlend", 0);
-        }
-        if(Input.GetAxis("Horizontal") != 0)
-        {
-            walkingX = true;
-            anim.SetFloat("Blend", Input.GetAxis("Horizontal"));
-        }
-        else
-        {
-            walkingX = false;
-            anim.SetFloat("Blend", 0);
-        }
-        anim.SetBool("walking", (walkingX || walkingY));    
+        anim.SetFloat("frontBlend", Input.GetAxis("Vertical"));
+        anim.SetFloat("Blend", Input.GetAxis("Horizontal"));
+        //anim.SetBool("walking", (walkingX || walkingY));    
 
         if(Input.GetKeyDown(KeyCode.Mouse0) && canAttack)
         {
