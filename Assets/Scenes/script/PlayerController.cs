@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     private Animator anim;
     public int combo = 1;
-    private bool canAttack = true /*, walkingY = false, walkingX = false*/; 
+    private bool canAttack = true, canJump = true /*, walkingY = false, walkingX = false*/; 
     
     void Start()
     {
@@ -27,11 +27,25 @@ public class PlayerController : MonoBehaviour
             canAttack = false;
             StartCoroutine("AttackCD");
         }
+
+        if(Input.GetKeyDown(KeyCode.Space) && canJump)
+        {
+            anim.SetBool("jump", true);
+            canJump = false;
+            StartCoroutine("Jump");
+        }
+    }
+
+    public IEnumerator Jump()
+    {
+        yield return new WaitForSeconds(0.4f);
+        canJump = true;
+        anim.SetBool("jump", false);
     }
 
     public IEnumerator AttackCD()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.2f);
         canAttack = true;
         anim.SetBool("attacking", false);
         anim.SetInteger("attack", combo);
